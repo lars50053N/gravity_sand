@@ -23,16 +23,49 @@ div {
     display: none;
 }
 
-#canvas-container {
-    padding: 2rem;
-}
-
 #main-body {
     display: flex;
     flex-direction: row;
 
     @media (max-width: 50rem) {
         flex-direction: column;
+    }
+}
+
+#canvas-container {
+    padding: 2rem;
+}
+
+.canvas-hint {
+    z-index: 1;
+    position: absolute;
+    color: #666666;
+}
+
+#canvas-hint-desktop {
+    @media (max-width: 32rem) {
+        display: none;
+    }
+}
+
+#canvas-hint-mobile {
+    display: none;
+
+    @media (max-width: 32rem) {
+        display: flex;
+    }
+}
+
+#canvas {
+    height: 70vmin;
+    width: 70vmin;
+    border: 1px black solid;
+    image-rendering: pixelated;
+    z-index: 2;
+
+    @media (max-width: 32rem) {
+        width: 90vmin;
+        height: 90vmin;
     }
 }
 
@@ -109,37 +142,4 @@ div {
     background-color: #007bff;
     color: white;
     transform: scale(0.95);
-}
-
-.canvas-tip {
-    z-index: 1;
-    position: absolute;
-    color: #666666;
-}
-
-#canvas-tip-desktop {
-    @media (max-width: 32rem) {
-        display: none;
-    }
-}
-
-#canvas-tip-mobile {
-    display: none;
-
-    @media (max-width: 32rem) {
-        display: flex;
-    }
-}
-
-#canvas {
-    height: 70vmin;
-    width: 70vmin;
-    border: 1px black solid;
-    image-rendering: pixelated;
-    z-index: 2;
-
-    @media (max-width: 32rem) {
-        width: 90vmin;
-        height: 90vmin;
-    }
 }

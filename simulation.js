@@ -4,6 +4,8 @@ const minBrightness = 0.6;
 let newGrainBrightness = maxBrightness;
 let newGrainBrightnessIncrement = -0.01;
 
+// a sand grain occupies a single pixel in the simulation,
+// the brightness value determines the visual appearance of the grain
 function SandGrain(x, y, brightness) {
     this.x = x;
     this.y = y;

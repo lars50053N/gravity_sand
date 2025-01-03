@@ -4,7 +4,7 @@ const canvas = document.getElementById("canvas");
 canvas.width = 128;
 canvas.height = 128;
 
-// getting mouse inputs for the canvas
+// getting mouse and touch inputs for the canvas
 
 let mouseDown = false;
 let touchDown = false;
@@ -14,13 +14,17 @@ let mouse = {
     y: 0
 };
 
+// actual size of a single simulated pixel in the horizontal direction
 function pixelSizeX() {
     return parseFloat(getComputedStyle(canvas).width) / canvas.width;
 }
 
+// actual size of a single simulated pixel in the vertical direction
 function pixelSizeY() {
     return parseFloat(getComputedStyle(canvas).height) / canvas.height;
 }
+
+// getting mouse inputs for the canvas
 
 canvas.addEventListener('mousedown', (event) => {
     if (event.button === 0) {
@@ -37,18 +41,20 @@ canvas.addEventListener('mousemove', (event) => {
     mouse.y = Math.floor(event.offsetY / pixelSizeY());
 });
 
-// Getting touchscreen inputs for the canvas
+// getting touchscreen inputs for the canvas
 
 function boundingRect() {
     return canvas.getBoundingClientRect();
 }
 
+function handleTouchInput(event) {
+    mouse.x = Math.floor((event.touches[0].pageX - boundingRect().left) / pixelSizeX());
+    mouse.y = Math.floor((event.touches[0].pageY - boundingRect().top - window.scrollY) / pixelSizeY());
+}
+
 canvas.addEventListener('touchstart', (event) => {
     document.getElementById('body').style.overflow = 'hidden';
-
-    mouse.x = Math.floor((event.touches[0].pageX - boundingRect().left) / pixelSizeX());
-    mouse.y = Math.floor((event.touches[0].pageY - boundingRect().top) / pixelSizeY());
-
+    handleTouchInput(event);
     touchDown = true;
 });
 
@@ -57,10 +63,7 @@ canvas.addEventListener('touchend', () => {
     touchDown = false;
 });
 
-window.addEventListener('touchmove', (event) => {
-    mouse.x = Math.floor((event.touches[0].pageX - boundingRect().left) / pixelSizeX());
-    mouse.y = Math.floor((event.touches[0].pageY - boundingRect().top) / pixelSizeY());
-});
+window.addEventListener('touchmove', handleTouchInput);
 
 // X- and Y-Axis acceleration, entered manually through sliders when in manual mode or
 // measured by sensors when in automatic mode
