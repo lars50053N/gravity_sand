@@ -96,4 +96,9 @@ div {
     width: 70vmin;
     border: 1px black solid;
     image-rendering: pixelated;
+
+    @media (max-width: 32rem) {
+        width: 90vmin;
+        height: 90vmin;
+    }
 }
