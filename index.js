@@ -78,12 +78,12 @@ ySlider.value = yAcc;
 
 window.addEventListener('devicemotion', (event) => {
     if (automaticMode) {
-        xAcc = event.accelerationIncludingGravity.x;
+        xAcc = -event.accelerationIncludingGravity.x;
         yAcc = event.accelerationIncludingGravity.y;
         xSlider.value = xAcc;
         ySlider.value = yAcc;
-        document.getElementById('slider-x').value = xAcc;
-        document.getElementById('slider-y').value = yAcc;
+        document.getElementById('slider-x').textContent = xAcc;
+        document.getElementById('slider-y').textContent = yAcc;
     }
 });
 
