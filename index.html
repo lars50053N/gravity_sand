@@ -4,52 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gravity Sand</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link id="css" rel="stylesheet" type="text/css" href="index.css">
     <script src="simulation.js" defer></script>
     <script src="index.js" defer></script>
 </head>
 <body id="body">
-    <div id="headline">
-        Gravity Sand
+<div id="headline">
+    Gravity Sand
+</div>
+
+<div id="main-body">
+    <div id="canvas-container">
+        <canvas id="canvas"></canvas>
+        <p class="canvas-tip" id="canvas-tip-desktop">Click to add sand.</p>
+        <p class="canvas-tip" id="canvas-tip-mobile">Touch to add sand.</p>
     </div>
 
-    <div id="main-body">
-        <div id="canvas-container">
-            <canvas id="canvas"></canvas>
+    <div id="controls">
+        <div id="segmented-button">
+            <button class="segment active" id="manual-button">Manual</button>
+            <button class="segment" id="automatic-button">Automatic</button>
         </div>
 
-        <div id="controls">
-            <div id="segmented-button">
-                <button class="segment active" id="manual-button">Manual</button>
-                <button class="segment" id="automatic-button">Automatic</button>
+        <div id="slider-container">
+            <div class="slider-box">
+                <label for="slider-x">X-Axis Acceleration: <span id="slider-value-x">0</span></label>
+                <input type="range" class="slider" id="slider-x" min="-10" max="10" value="0" step="0.1">
             </div>
 
-            <div id="slider-container">
-                <div class="slider-box">
-                    <label for="slider-x">X-Axis Acceleration: <span id="slider-value-x">0</span></label>
-                    <input type="range" id="slider-x" min="-10" max="10" value="0" step="0.1">
-                </div>
-
-                <div class="slider-box">
-                    <label for="slider-y">Y-Axis Acceleration: <span id="slider-value-y">9.7</span></label>
-                    <input type="range" id="slider-y" min="-10" max="10" value="9.7" step="0.1">
-                </div>
+            <div class="slider-box">
+                <label for="slider-y">Y-Axis Acceleration: <span id="slider-value-y">9.7</span></label>
+                <input type="range" class="slider" id="slider-y" min="-10" max="10" value="9.7" step="0.1">
             </div>
         </div>
 
-
+        <button id="reset-button"><i class="fa-solid fa-rotate-left"></i> Reset</button>
     </div>
 
 
+</div>
 
-    <div>
-        <div class="info" id="info1">
-            Enable Sensors for full functionality
-        </div>
 
-        <div class="info" id="info2">
-            Disable Screen Rotation for an optimal experience
-        </div>
+<div>
+    <div class="info" id="info1">
+        Enable Sensors for full functionality
     </div>
+
+    <div class="info" id="info2">
+        Disable Screen Rotation for an optimal experience
+    </div>
+</div>
 </body>
 </html>

@@ -55,6 +55,10 @@ div {
     width: 15rem;
 }
 
+.slider {
+    cursor: pointer;
+}
+
 #controls {
     display: flex;
     flex-direction: column;
@@ -91,11 +95,48 @@ div {
     background-color: #e0e0e0;
 }
 
+#reset-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    padding: 0.5rem 2rem;
+    margin: 1rem;
+    cursor: pointer;
+    transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
+#reset-button:active {
+    background-color: #007bff;
+    color: white;
+    transform: scale(0.95);
+}
+
+.canvas-tip {
+    z-index: 1;
+    position: absolute;
+    color: #666666;
+}
+
+#canvas-tip-desktop {
+    @media (max-width: 32rem) {
+        display: none;
+    }
+}
+
+#canvas-tip-mobile {
+    display: none;
+
+    @media (max-width: 32rem) {
+        display: flex;
+    }
+}
+
 #canvas {
     height: 70vmin;
     width: 70vmin;
     border: 1px black solid;
     image-rendering: pixelated;
+    z-index: 2;
 
     @media (max-width: 32rem) {
         width: 90vmin;

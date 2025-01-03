@@ -118,6 +118,11 @@ document.getElementById('automatic-button').addEventListener('click', () => {
     ySlider.style.display = 'none';
 })
 
+// button for resetting the simulation
+document.getElementById('reset-button').addEventListener('click', () => {
+    reset();
+})
+
 // interacting with the simulation
 
 const ctx = canvas.getContext('2d');

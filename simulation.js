@@ -62,3 +62,9 @@ function step(xAcc, yAcc) {
         }
     }
 }
+
+// removes all sand from the simulation
+function reset() {
+    sand = [];
+    occupationGrid = Array.from({length: canvas.width}, () => new Array(canvas.height).fill(false));
+}
