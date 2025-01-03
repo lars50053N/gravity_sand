@@ -82,8 +82,8 @@ window.addEventListener('devicemotion', (event) => {
         yAcc = event.accelerationIncludingGravity.y;
         xSlider.value = xAcc;
         ySlider.value = yAcc;
-        document.getElementById('slider-value-x').textContent = xAcc;
-        document.getElementById('slider-value-y').textContent = yAcc;
+        document.getElementById('slider-value-x').textContent = xAcc.toPrecision(2);
+        document.getElementById('slider-value-y').textContent = yAcc.toPrecision(2);
     }
 });
 
