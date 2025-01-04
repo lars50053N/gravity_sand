@@ -79,16 +79,28 @@ const ySlider = document.getElementById('slider-y');
 xSlider.value = xAcc;
 ySlider.value = yAcc;
 
-window.addEventListener('devicemotion', (event) => {
-    if (automaticMode) {
-        xAcc = -event.accelerationIncludingGravity.x;
-        yAcc = event.accelerationIncludingGravity.y;
-        xSlider.value = xAcc;
-        ySlider.value = yAcc;
-        document.getElementById('slider-value-x').textContent = xAcc.toPrecision(2);
-        document.getElementById('slider-value-y').textContent = yAcc.toPrecision(2);
-    }
-});
+let activatedDeviceMotion = false;
+let receivedDeviceMotionData = false;
+
+function activateDeviceMotion() {
+    window.addEventListener('devicemotion', (event) => {
+        if (automaticMode) {
+            xAcc = -event.accelerationIncludingGravity.x;
+            yAcc = event.accelerationIncludingGravity.y;
+            xSlider.value = xAcc;
+            ySlider.value = yAcc;
+            document.getElementById('slider-value-x').textContent = xAcc.toPrecision(2);
+            document.getElementById('slider-value-y').textContent = yAcc.toPrecision(2);
+
+            if (!receivedDeviceMotionData) {
+                receivedDeviceMotionData = true;
+                sensorInfo.style.display = 'none';
+                screenRotationInfo.style.display = 'flex';
+            }
+        }
+    });
+    activatedDeviceMotion = true;
+}
 
 xSlider.addEventListener('input', () => {
     document.getElementById('slider-value-x').textContent = xSlider.value;
@@ -102,6 +114,9 @@ ySlider.addEventListener('input', () => {
 
 // switching between manual and automatic modes
 
+const screenRotationInfo = document.getElementById('info-rotation');
+const sensorInfo = document.getElementById('info-sensor');
+
 document.querySelectorAll('.segment').forEach(button => {
     button.addEventListener('click', () => {
         document.querySelectorAll('.segment').forEach(btn => btn.classList.remove('active'));
@@ -111,14 +126,39 @@ document.querySelectorAll('.segment').forEach(button => {
 
 document.getElementById('manual-button').addEventListener('click', () => {
     automaticMode = false;
+
     xSlider.style.display = 'block';
     ySlider.style.display = 'block';
+
+    screenRotationInfo.style.display = 'none';
+    sensorInfo.style.display = 'none';
 })
 
 document.getElementById('automatic-button').addEventListener('click', () => {
     automaticMode = true;
+
     xSlider.style.display = 'none';
     ySlider.style.display = 'none';
+
+    if (receivedDeviceMotionData) {
+        screenRotationInfo.style.display = 'flex';
+    } else {
+        sensorInfo.style.display = 'flex';
+    }
+
+    if (!activatedDeviceMotion) {
+        if (typeof DeviceMotionEvent.requestPermission === "function") {
+            DeviceMotionEvent.requestPermission()
+                .then((permissionState) => {
+                    if (permissionState === "granted") {
+                        activateDeviceMotion();
+                    }
+                })
+                .catch(console.error);
+        } else {
+            activateDeviceMotion();
+        }
+    }
 })
 
 // button for resetting the simulation

@@ -9,17 +9,25 @@ div {
 }
 
 #headline {
-    font-size: 3rem;
+    font-size: 4rem;
+    padding: 0.5rem;
+    font-weight: bold;
+}
+
+#subheading {
+    font-size: 1.2rem;
+    color: #333333;
 }
 
 .info {
     background-color: indianred;
     color: white;
-    padding: 1rem 2rem;
-    border-radius: 1rem;
+    padding: 0.7rem 1.5rem;
+    border-radius: 2rem;
     border: 0.2rem solid darkred;
     font-size: 1rem;
     text-align: center;
+    margin: 0.5rem;
     display: none;
 }
 
