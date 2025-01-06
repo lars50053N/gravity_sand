@@ -206,12 +206,14 @@ document.getElementById('automatic-button').addEventListener('click', () => {
 
 // controlling the simulation speed
 
-let speedSlider = document.getElementById('slider-speed');
-speedSlider.value = 5;
-document.getElementById('slider-value-speed').textContent = speedSlider.value;
+const speedSlider = document.getElementById('slider-speed');
+speedSlider.value = 2;
+
+const speedSliderLabel = document.getElementById('slider-value-speed');
+speedSliderLabel.textContent = speedSlider.value;
 
 speedSlider.addEventListener('input', () => {
-    document.getElementById('slider-value-speed').textContent = speedSlider.value;
+    speedSliderLabel.textContent = speedSlider.value;
 });
 
 

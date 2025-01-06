@@ -6,6 +6,13 @@
 div {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+#body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #headline {
@@ -36,7 +43,6 @@ div {
 }
 
 #main-body {
-    display: flex;
     flex-direction: row;
 
     @media (max-width: 50rem) {
@@ -45,6 +51,8 @@ div {
 }
 
 #canvas-container {
+    flex-direction: column;
+    justify-content: left;
     padding: 2rem;
 }
 
@@ -127,7 +135,6 @@ div {
 }
 
 #acc-slider-container {
-    display: flex;
     flex-direction: column;
 
     @media (max-width: 50rem) {
@@ -167,4 +174,13 @@ div {
     background-color: #007bff;
     color: white;
     transform: scale(0.95);
+}
+
+#description {
+    padding: 2rem 0;
+    width: 70vw;
+
+    @media (max-width: 50rem) {
+        width: 90vw;
+    }
 }
