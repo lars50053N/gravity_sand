@@ -86,8 +86,13 @@ let yAcc = 9.7;
 const xSlider = document.getElementById('slider-x');
 const ySlider = document.getElementById('slider-y');
 
+const xSliderLabel = document.getElementById('slider-value-x');
+const ySliderLabel = document.getElementById('slider-value-y');
+
 xSlider.value = xAcc;
 ySlider.value = yAcc;
+xSliderLabel.textContent = xAcc;
+ySliderLabel.textContent = yAcc;
 
 let activatedDeviceMotion = false;
 let receivedDeviceMotionData = false;
@@ -117,8 +122,8 @@ function activateDeviceMotion() {
 
             xSlider.value = xAcc;
             ySlider.value = yAcc;
-            document.getElementById('slider-value-x').textContent = xAcc.toPrecision(2);
-            document.getElementById('slider-value-y').textContent = yAcc.toPrecision(2);
+            xSliderLabel.textContent = xAcc.toPrecision(2);
+            ySliderLabel.textContent = yAcc.toPrecision(2);
 
             if (!receivedDeviceMotionData) {
                 receivedDeviceMotionData = true;
@@ -131,12 +136,12 @@ function activateDeviceMotion() {
 }
 
 xSlider.addEventListener('input', () => {
-    document.getElementById('slider-value-x').textContent = xSlider.value;
+    xSliderLabel.textContent = xSlider.value;
     xAcc = parseFloat(xSlider.value);
 });
 
 ySlider.addEventListener('input', () => {
-    document.getElementById('slider-value-y').textContent = ySlider.value;
+    ySliderLabel.textContent = ySlider.value;
     yAcc = parseFloat(ySlider.value);
 });
 
@@ -202,11 +207,13 @@ document.getElementById('automatic-button').addEventListener('click', () => {
 // controlling the simulation speed
 
 let speedSlider = document.getElementById('slider-speed');
-speedSlider.value = 1;
+speedSlider.value = 5;
+document.getElementById('slider-value-speed').textContent = speedSlider.value;
 
 speedSlider.addEventListener('input', () => {
     document.getElementById('slider-value-speed').textContent = speedSlider.value;
 });
+
 
 // button for resetting the simulation
 document.getElementById('reset-button').addEventListener('click', () => {
@@ -219,7 +226,7 @@ const ctx = canvas.getContext('2d');
 
 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-// adds a grain of sand on the imageData, which will later be displayed on the canvas
+// Adds a grain of sand on the imageData, which will later be displayed on the canvas.
 function draw(grain) {
     let i = (grain.x + grain.y * canvas.width) * 4;
 
