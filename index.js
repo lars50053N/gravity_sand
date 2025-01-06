@@ -162,7 +162,10 @@ const sensorInfo = document.getElementById('info-sensor');
 
 document.querySelectorAll('.segment').forEach(button => {
     button.addEventListener('click', () => {
-        document.querySelectorAll('.segment').forEach(btn => btn.classList.remove('active'));
+        let segmentGroup = button.classList[1];
+        document.querySelectorAll(`.segment.${segmentGroup}`).forEach(
+            otherButton => otherButton.classList.remove('active')
+        );
         button.classList.add('active');
     });
 });
@@ -216,11 +219,22 @@ speedSlider.addEventListener('input', () => {
     speedSliderLabel.textContent = speedSlider.value;
 });
 
+// Changing the sand type
+
+let sandType = 'dynamic';
+
+document.getElementById('dynamic-sand-button').addEventListener('click', () => {
+    sandType = 'dynamic';
+});
+
+document.getElementById('static-sand-button').addEventListener('click', () => {
+    sandType = 'static';
+});
 
 // button for resetting the simulation
 document.getElementById('reset-button').addEventListener('click', () => {
     reset();
-})
+});
 
 // interacting with the simulation
 
@@ -242,9 +256,16 @@ function draw(grain) {
 function runSimulation() {
     imageData.data.fill(0);
 
-    for (let i = 0; i < speedSlider.value; i++) {
-        step(xAcc, yAcc);
+    if (sandType === 'dynamic') {
+        for (let i = 0; i < speedSlider.value; i++) {
+            step(xAcc, yAcc);
+        }
+    } else {
+        for (let i = 0; i < speedSlider.value; i++) {
+            stepOriginal(xAcc, yAcc);
+        }
     }
+
 
     if (mouseDown || touchDown) {
         addGrain(mouse.x, mouse.y);

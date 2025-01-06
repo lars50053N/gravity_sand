@@ -54,18 +54,18 @@ function step(xAcc, yAcc) {
         let yAccRand = yAcc;
 
         if (grain.stationary >= 5) {
-            xAccRand += (Math.random() - 1/2) * Math.abs(yAcc) * 4;
-            yAccRand += (Math.random() - 1/2) * Math.abs(xAcc) * 4;
+            xAccRand += (Math.random() - 1/2) * Math.pow(yAcc, 2);
+            yAccRand += (Math.random() - 1/2) * Math.pow(xAcc, 2);
         }
 
         let xOffset = 0;
         let yOffset = 0;
 
-        if (Math.random() * 200 < Math.pow(xAccRand, 2)) {
+        if (Math.random() * 20 < Math.abs(xAccRand)) {
             xOffset = Math.sign(xAccRand);
         }
 
-        if (Math.random() * 200 < Math.pow(yAccRand, 2)) {
+        if (Math.random() * 20 < Math.abs(yAccRand)) {
             yOffset = Math.sign(yAccRand);
         }
 
@@ -90,11 +90,11 @@ function stepOriginal(xAcc, yAcc) {
         let xOffset = 0;
         let yOffset = 0;
 
-        if (Math.random() * 200 < Math.pow(xAcc, 2)) {
+        if (Math.random() * 20 < Math.abs(xAcc)) {
             xOffset = Math.sign(xAcc);
         }
 
-        if (Math.random() * 200 < Math.pow(yAcc, 2)) {
+        if (Math.random() * 20 < Math.abs(yAcc)) {
             yOffset = Math.sign(yAcc);
         }
 

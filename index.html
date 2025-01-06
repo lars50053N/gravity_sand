@@ -32,19 +32,23 @@
         <div id="gravity-controls">
             Gravity Controls
 
-            <div id="segmented-button">
-                <button class="segment active" id="manual-button">Manual</button>
-                <button class="segment" id="automatic-button">Automatic</button>
+            <div class="segmented-button" id="gravity-button">
+                <button class="segment gravity active" id="manual-button">Manual</button>
+                <button class="segment gravity" id="automatic-button">Automatic</button>
             </div>
 
             <div id="acc-slider-container">
                 <div class="slider-box">
-                    <label for="slider-x">X-Axis Acceleration: <span id="slider-value-x"></span></label>
+                    <label for="slider-x" class="slider-label">
+                        X-Axis Acceleration: <span id="slider-value-x"></span>
+                    </label>
                     <input type="range" class="slider" id="slider-x" min="-10" max="10" step="0.1">
                 </div>
 
                 <div class="slider-box">
-                    <label for="slider-y">Y-Axis Acceleration: <span id="slider-value-y"></span></label>
+                    <label for="slider-y" class="slider-label">
+                        Y-Axis Acceleration: <span id="slider-value-y"></span>
+                    </label>
                     <input type="range" class="slider" id="slider-y" min="-10" max="10" step="0.1">
                 </div>
             </div>
@@ -53,6 +57,11 @@
         <div class="slider-box">
             <label for="slider-speed">Simulation Speed: <span id="slider-value-speed"></span></label>
             <input type="range" class="slider" id="slider-speed" min="0" max="10" step="1">
+        </div>
+
+        <div class="segmented-button" id="sand-button">
+            <button class="segment sand active" id="dynamic-sand-button">Dynamic Sand</button>
+            <button class="segment sand" id="static-sand-button">Static Sand</button>
         </div>
 
         <button id="reset-button"><i class="fa-solid fa-rotate-left"></i> Reset</button>
