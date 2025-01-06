@@ -14,12 +14,12 @@ let mouse = {
     y: 0
 };
 
-// actual size of a single simulated pixel in the horizontal direction
+// Returns the actual size of a single simulated pixel in the horizontal direction.
 function pixelSizeX() {
     return parseFloat(getComputedStyle(canvas).width) / canvas.width;
 }
 
-// actual size of a single simulated pixel in the vertical direction
+// Returns the actual size of a single simulated pixel in the vertical direction.
 function pixelSizeY() {
     return parseFloat(getComputedStyle(canvas).height) / canvas.height;
 }
@@ -43,6 +43,16 @@ canvas.addEventListener('mousemove', (event) => {
 
 // getting touchscreen inputs for the canvas
 
+// Disables scrolling. (used when touch input is used for something else)
+function disableScrolling() {
+    document.getElementById('body').style.overflow = 'hidden';
+}
+
+// Enables Scrolling. (used when a touch input is ended)
+function enableScrolling() {
+    document.getElementById('body').style.overflow = 'auto';
+}
+
 function boundingRect() {
     return canvas.getBoundingClientRect();
 }
@@ -53,13 +63,13 @@ function handleTouchInput(event) {
 }
 
 canvas.addEventListener('touchstart', (event) => {
-    document.getElementById('body').style.overflow = 'hidden';
+    disableScrolling();
     handleTouchInput(event);
     touchDown = true;
 });
 
 canvas.addEventListener('touchend', () => {
-    document.getElementById('body').style.overflow = 'auto';
+    enableScrolling();
     touchDown = false;
 });
 
@@ -123,12 +133,22 @@ function activateDeviceMotion() {
 xSlider.addEventListener('input', () => {
     document.getElementById('slider-value-x').textContent = xSlider.value;
     xAcc = parseFloat(xSlider.value);
-})
+});
 
 ySlider.addEventListener('input', () => {
     document.getElementById('slider-value-y').textContent = ySlider.value;
     yAcc = parseFloat(ySlider.value);
-})
+});
+
+// disable Scrolling while interacting with a slider
+document.querySelectorAll('.slider').forEach((slider) => {
+    slider.addEventListener('touchstart', () => {
+        disableScrolling();
+    });
+    slider.addEventListener('touchend', () => {
+        enableScrolling();
+    });
+});
 
 // switching between manual and automatic modes
 
@@ -150,7 +170,7 @@ document.getElementById('manual-button').addEventListener('click', () => {
 
     screenRotationInfo.style.display = 'none';
     sensorInfo.style.display = 'none';
-})
+});
 
 document.getElementById('automatic-button').addEventListener('click', () => {
     automaticMode = true;
@@ -177,7 +197,16 @@ document.getElementById('automatic-button').addEventListener('click', () => {
             activateDeviceMotion();
         }
     }
-})
+});
+
+// controlling the simulation speed
+
+let speedSlider = document.getElementById('slider-speed');
+speedSlider.value = 1;
+
+speedSlider.addEventListener('input', () => {
+    document.getElementById('slider-value-speed').textContent = speedSlider.value;
+});
 
 // button for resetting the simulation
 document.getElementById('reset-button').addEventListener('click', () => {
@@ -200,11 +229,13 @@ function draw(grain) {
     imageData.data[i + 3] = 255;                        //alpha
 }
 
-// loop for continuously running the simulation, reading inputs to add sand to it and drawing on the canvas
+// Continuously runs the simulation, draws it on the canvas, and adds sand to it on user input.
 function runSimulation() {
     imageData.data.fill(0);
 
-    step(xAcc, yAcc);
+    for (let i = 0; i < speedSlider.value; i++) {
+        step(xAcc, yAcc);
+    }
 
     if (mouseDown || touchDown) {
         addGrain(mouse.x, mouse.y);

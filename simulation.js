@@ -54,18 +54,18 @@ function step(xAcc, yAcc) {
         let yAccRand = yAcc;
 
         if (grain.stationary >= 5) {
-            xAccRand += (Math.random() * 10 - 5);
-            yAccRand += (Math.random() * 10 - 5);
+            xAccRand += (Math.random() - 1/2) * Math.abs(yAcc) * 4;
+            yAccRand += (Math.random() - 1/2) * Math.abs(xAcc) * 4;
         }
 
         let xOffset = 0;
         let yOffset = 0;
 
-        if (Math.random() * 10 < Math.abs(xAccRand)) {
+        if (Math.random() * 200 < Math.pow(xAccRand, 2)) {
             xOffset = Math.sign(xAccRand);
         }
 
-        if (Math.random() * 10 < Math.abs(yAccRand)) {
+        if (Math.random() * 200 < Math.pow(yAccRand, 2)) {
             yOffset = Math.sign(yAccRand);
         }
 
@@ -80,6 +80,32 @@ function step(xAcc, yAcc) {
             grain.stationary = 0;
         } else if ((xOffset !== 0 || yOffset !== 0) && insideBounds(newX, newY)) {
             grain.stationary++;
+        }
+    }
+}
+
+// Legacy step function.
+function stepOriginal(xAcc, yAcc) {
+    for (const grain of sand) {
+        let xOffset = 0;
+        let yOffset = 0;
+
+        if (Math.random() * 200 < Math.pow(xAcc, 2)) {
+            xOffset = Math.sign(xAcc);
+        }
+
+        if (Math.random() * 200 < Math.pow(yAcc, 2)) {
+            yOffset = Math.sign(yAcc);
+        }
+
+        let newX = grain.x + xOffset;
+        let newY = grain.y + yOffset;
+
+        if (validPlace(newX, newY)) {
+            occupationGrid[grain.x][grain.y] = false;
+            grain.x = newX;
+            grain.y = newY;
+            occupationGrid[grain.x][grain.y] = true;
         }
     }
 }

@@ -81,7 +81,52 @@ div {
     }
 }
 
-#slider-container {
+#controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#gravity-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #cccccc;
+    border-radius: 0.5rem;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+}
+
+#segmented-button {
+    display: inline-flex;
+    border: 1px solid #cccccc;
+    border-radius: 1rem;
+    overflow: hidden;
+    width: 14rem;
+    margin: 1rem;
+}
+
+.segment {
+    padding: 0.5rem 2rem;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.segment:not(:last-child) {
+    border-right: 1px solid #cccccc;
+}
+
+.segment.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.segment:hover:not(.active) {
+    background-color: #e0e0e0;
+}
+
+#acc-slider-container {
     display: flex;
     flex-direction: column;
 
@@ -104,50 +149,18 @@ div {
     cursor: pointer;
 }
 
-#controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#segmented-button {
-    display: inline-flex;
-    border: 1px solid #ccc;
-    border-radius: 1rem;
-    overflow: hidden;
-    width: 14rem;
-    margin: 1rem;
-}
-
-.segment {
-    padding: 0.5rem 2rem;
-    border: none;
-    background-color: #f0f0f0;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.segment:not(:last-child) {
-    border-right: 1px solid #ccc;
-}
-
-.segment.active {
-    background-color: #007bff;
-    color: white;
-}
-
-.segment:hover:not(.active) {
-    background-color: #e0e0e0;
-}
-
 #reset-button {
     background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc;
     border-radius: 1rem;
     padding: 0.5rem 2rem;
     margin: 1rem;
     cursor: pointer;
-    transition: transform 0.1s ease, background-color 0.1s ease;
+    transition: transform 0.1s ease, background-color 0.1s ease, color 0.1s ease;
+}
+
+#reset-button:hover {
+    background-color: #e0e0e0;
 }
 
 #reset-button:active {
