@@ -12,6 +12,10 @@ div {
     font-size: 4rem;
     padding: 0.5rem;
     font-weight: bold;
+
+    @media (max-width: 50rem) {
+        font-size: 3rem;
+    }
 }
 
 #subheading {

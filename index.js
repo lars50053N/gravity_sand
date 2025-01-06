@@ -85,8 +85,26 @@ let receivedDeviceMotionData = false;
 function activateDeviceMotion() {
     window.addEventListener('devicemotion', (event) => {
         if (automaticMode) {
-            xAcc = -event.accelerationIncludingGravity.x;
-            yAcc = event.accelerationIncludingGravity.y;
+            switch (screen.orientation.angle) {
+                case 0:
+                    xAcc = -event.accelerationIncludingGravity.x;
+                    yAcc = event.accelerationIncludingGravity.y;
+                    break;
+                case 90:
+                    xAcc = event.accelerationIncludingGravity.y;
+                    yAcc = event.accelerationIncludingGravity.x;
+                    break;
+                case 180:
+                    xAcc = event.accelerationIncludingGravity.x;
+                    yAcc = -event.accelerationIncludingGravity.y;
+                    break;
+                case 270:
+                    xAcc = -event.accelerationIncludingGravity.y;
+                    yAcc = -event.accelerationIncludingGravity.x;
+                    break;
+            }
+
+
             xSlider.value = xAcc;
             ySlider.value = yAcc;
             document.getElementById('slider-value-x').textContent = xAcc.toPrecision(2);
