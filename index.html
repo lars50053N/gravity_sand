@@ -30,7 +30,13 @@
 
     <div id="controls">
         <div id="gravity-controls">
-            Gravity Controls
+            <p>
+                Gravity Controls
+
+                <button class="popup-button gravity">
+                    <i class="fa-regular fa-circle-question"></i>
+                </button>
+            </p>
 
             <div class="segmented-button" id="gravity-button">
                 <button class="segment gravity active" id="manual-button">Manual</button>
@@ -59,6 +65,12 @@
             <input type="range" class="slider" id="slider-speed" min="0" max="10" step="1">
         </div>
 
+        <label for="sand-button">
+            Sand Type
+            <button class="popup-button sand">
+                <i class="fa-regular fa-circle-question"></i>
+            </button>
+        </label>
         <div class="segmented-button" id="sand-button">
             <button class="segment sand active" id="dynamic-sand-button">Dynamic Sand</button>
             <button class="segment sand" id="static-sand-button">Static Sand</button>
@@ -66,21 +78,31 @@
 
         <button id="reset-button"><i class="fa-solid fa-rotate-left"></i> Reset</button>
 
-        <div class="info" id="info-rotation">
+        <div class="alert" id="alert-rotation">
             Disabling Screen Rotation is recommended
         </div>
-        <div class="info" id="info-sensor">
+        <div class="alert" id="alert-sensor">
             No Sensor Data Available
         </div>
     </div>
 </div>
 
 <div id="description">
-    Gravity Sand is a Falling Sand Game, where you can control the direction and strength of gravity inside the simulation.
+    Gravity Sand is a Falling Sand Game, where you can control the direction and strength of gravity inside the
+    simulation.
 
     In Manual Mode, use the sliders to adjust the simulation's gravity.
     In Automatic Mode, the simulation's gravity is automatically gathered from your device's sensors.
 </div>
+
+<div class="popup gravity">
+    Gravity Popup Placeholder
+</div>
+<div class="popup sand">
+    Sand Popup Placeholder
+</div>
+
+<div id="popup-blur"></div>
 
 </body>
 </html>

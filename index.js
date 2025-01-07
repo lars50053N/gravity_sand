@@ -236,6 +236,25 @@ document.getElementById('reset-button').addEventListener('click', () => {
     reset();
 });
 
+// popup buttons
+
+const popupBlur = document.getElementById('popup-blur');
+
+document.querySelectorAll('.popup-button').forEach(button => {
+    button.addEventListener('click', () => {
+        let buttonClass = button.classList[1];
+        document.querySelector(`.popup.${buttonClass}`).style.display = 'flex';
+        popupBlur.style.display = 'flex';
+    })
+});
+
+popupBlur.addEventListener('click', () => {
+    document.querySelectorAll('.popup').forEach(popup => {
+        popup.style.display = 'none';
+    })
+    popupBlur.style.display = 'none';
+});
+
 // interacting with the simulation
 
 const ctx = canvas.getContext('2d');

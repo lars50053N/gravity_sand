@@ -9,6 +9,26 @@ div {
     align-items: center;
 }
 
+button {
+    background-color: #f0f0f0;
+    border: 1px solid #cccccc;
+    cursor: pointer;
+}
+
+button:not(.segment) {
+    transition: all 0.1s ease;
+}
+
+button:hover:not(.segment) {
+    background-color: #e0e0e0;
+}
+
+button:active:not(.segment) {
+    background-color: #007bff;
+    color: white;
+    transform: scale(0.95);
+}
+
 #body {
     display: flex;
     flex-direction: column;
@@ -30,7 +50,7 @@ div {
     color: #333333;
 }
 
-.info {
+.alert {
     background-color: indianred;
     color: white;
     padding: 0.7rem 1.5rem;
@@ -84,8 +104,8 @@ div {
     z-index: 2;
 
     @media (max-width: 32rem) {
-        width: 90vmin;
-        height: 90vmin;
+        width: 85vmin;
+        height: 85vmin;
     }
 }
 
@@ -102,20 +122,22 @@ div {
     border: 1px solid #cccccc;
     border-radius: 0.5rem;
     padding: 1rem 0.5rem 0.5rem 0.5rem;
+
+    @media (min-width: 50rem) {
+        margin-top: 2rem;
+    }
 }
 
 .segmented-button {
     border: 1px solid #cccccc;
     border-radius: 1rem;
     overflow: hidden;
-    margin: 1rem;
+    margin: 0.5rem 1rem 1rem 1rem;
 }
 
 .segment {
     padding: 0.5rem 1.5rem;
     border: none;
-    background-color: #f0f0f0;
-    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
@@ -139,7 +161,7 @@ div {
         flex-direction: row;
     }
 
-    @media (max-width: 32rem) {
+    @media (max-width: 40rem) {
         flex-direction: column;
     }
 }
@@ -157,33 +179,49 @@ div {
 .slider {
     cursor: pointer;
     min-width: 12rem;
+    margin-bottom: 0.5rem;
 }
 
 #reset-button {
-    background-color: #f0f0f0;
-    border: 1px solid #cccccc;
     border-radius: 1rem;
     padding: 0.5rem 2rem;
     margin: 1rem;
-    cursor: pointer;
-    transition: transform 0.1s ease, background-color 0.1s ease, color 0.1s ease;
 }
 
-#reset-button:hover {
-    background-color: #e0e0e0;
+.popup-button {
+    border: none;
+    background: none;
+    border-radius: 0.2rem;
 }
 
-#reset-button:active {
-    background-color: #007bff;
-    color: white;
-    transform: scale(0.95);
+.popup {
+    display: none;
+    position: fixed;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #666666;
+    z-index: 5;
+    top: 40%
+}
+
+#popup-blur {
+    display: none;
+    position: fixed;
+    z-index: 4;
+    background-color: #00000066;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
 
 #description {
     padding: 2rem 0;
+    text-align: justify;
     width: 70vw;
 
     @media (max-width: 50rem) {
-        width: 90vw;
+        width: 85vw;
     }
 }
