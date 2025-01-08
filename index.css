@@ -196,13 +196,14 @@ button:active:not(.segment) {
 
 .popup {
     display: none;
+    flex-direction: column;
     position: fixed;
     background-color: white;
-    padding: 2rem;
-    border-radius: 0.5rem;
+    max-width: 85vw;
+    padding: 1vw 5vw 2.5vw 5vw;
     border: 1px solid #666666;
     z-index: 5;
-    top: 40%
+    top: 20%
 }
 
 #popup-blur {
@@ -219,7 +220,11 @@ button:active:not(.segment) {
 #description {
     padding: 2rem 0;
     text-align: justify;
-    width: 70vw;
+    width: 50vw;
+
+    @media (max-width: 80rem) {
+        width: 70vw;
+    }
 
     @media (max-width: 50rem) {
         width: 85vw;
