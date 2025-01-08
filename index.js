@@ -127,8 +127,8 @@ function activateDeviceMotion() {
 
             if (!receivedDeviceMotionData) {
                 receivedDeviceMotionData = true;
-                sensorInfo.style.display = 'none';
-                screenRotationInfo.style.display = 'flex';
+                sensorAlert.style.display = 'none';
+                screenRotationAlert.style.display = 'flex';
             }
         }
     });
@@ -157,8 +157,8 @@ document.querySelectorAll('.slider').forEach((slider) => {
 
 // switching between manual and automatic modes
 
-const screenRotationInfo = document.getElementById('info-rotation');
-const sensorInfo = document.getElementById('info-sensor');
+const screenRotationAlert = document.getElementById('alert-rotation');
+const sensorAlert = document.getElementById('alert-sensor');
 
 document.querySelectorAll('.segment').forEach(button => {
     button.addEventListener('click', () => {
@@ -176,8 +176,8 @@ document.getElementById('manual-button').addEventListener('click', () => {
     xSlider.style.display = 'block';
     ySlider.style.display = 'block';
 
-    screenRotationInfo.style.display = 'none';
-    sensorInfo.style.display = 'none';
+    screenRotationAlert.style.display = 'none';
+    sensorAlert.style.display = 'none';
 });
 
 document.getElementById('automatic-button').addEventListener('click', () => {
@@ -187,9 +187,9 @@ document.getElementById('automatic-button').addEventListener('click', () => {
     ySlider.style.display = 'none';
 
     if (receivedDeviceMotionData) {
-        screenRotationInfo.style.display = 'flex';
+        screenRotationAlert.style.display = 'flex';
     } else {
-        sensorInfo.style.display = 'flex';
+        sensorAlert.style.display = 'flex';
     }
 
     if (!activatedDeviceMotion) {
