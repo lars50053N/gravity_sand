@@ -1,27 +1,54 @@
 const canvas = document.getElementById("canvas");
 
-// height and width of the canvas in terms of simulated pixels
-canvas.width = 128;
-canvas.height = 128;
+canvas.width = simulationWidth;
+canvas.height = simulationHeight;
 
 // getting mouse and touch inputs for the canvas
 
+/**
+ * True, if the mouse is pressed on the canvas.
+ *
+ * @type {boolean}
+ */
 let mouseDown = false;
+
+/**
+ * True, if there is touchscreen input on the canvas.
+ *
+ * @type {boolean}
+ */
 let touchDown = false;
 
+/**
+ * The position of the mouse on the canvas in terms of simulation pixels.
+ *
+ * x=0 is the leftmost column of pixels, x increases when going to the right
+ *
+ * y=0 ist the uppermost row of pixels, y increases when going down
+ *
+ * @type {{x: number, y: number}}
+ */
 let mouse = {
     x: 0,
     y: 0
 };
 
-// Returns the actual size of a single simulated pixel in the horizontal direction.
+/**
+ * Returns the actual size of a single simulated pixel in the horizontal direction.
+ *
+ * @returns {number} the actual size horizontal size of a pixel
+ */
 function pixelSizeX() {
-    return parseFloat(getComputedStyle(canvas).width) / canvas.width;
+    return parseFloat(getComputedStyle(canvas).width) / simulationWidth;
 }
 
-// Returns the actual size of a single simulated pixel in the vertical direction.
+/**
+ * Returns the actual size of a single simulated pixel in the vertical direction.
+ *
+ * @returns {number} the actual vertical size of a pixel
+ */
 function pixelSizeY() {
-    return parseFloat(getComputedStyle(canvas).height) / canvas.height;
+    return parseFloat(getComputedStyle(canvas).height) / simulationHeight;
 }
 
 // getting mouse inputs for the canvas
@@ -32,7 +59,7 @@ canvas.addEventListener('mousedown', (event) => {
     }
 });
 
-canvas.addEventListener('mouseup', () => {
+document.addEventListener('mouseup', () => {
     mouseDown = false;
 });
 
@@ -43,23 +70,30 @@ canvas.addEventListener('mousemove', (event) => {
 
 // getting touchscreen inputs for the canvas
 
-// Disables scrolling. (used when touch input is used for something else)
+/**
+ * Disables scrolling. This is done when touch input is used for interacting with the canvas or a slider.
+ */
 function disableScrolling() {
-    document.getElementById('body').style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
 }
 
-// Enables Scrolling. (used when a touch input is ended)
+/**
+ * Enables Scrolling. This is done when a touch input that interacted with the canvas or a slider is ended.
+ */
 function enableScrolling() {
-    document.getElementById('body').style.overflow = 'auto';
+    document.body.style.overflow = 'auto';
 }
 
-function boundingRect() {
-    return canvas.getBoundingClientRect();
-}
-
+/**
+ * Computes the "mouse" position on the canvas in terms of simulated pixels from a given TouchEvent.
+ *
+ * @param event {TouchEvent} the TouchEvent, from which the mouse position is computed
+ */
 function handleTouchInput(event) {
-    mouse.x = Math.floor((event.touches[0].pageX - boundingRect().left) / pixelSizeX());
-    mouse.y = Math.floor((event.touches[0].pageY - boundingRect().top - window.scrollY) / pixelSizeY());
+    let boundingRect = canvas.getBoundingClientRect();
+
+    mouse.x = Math.floor((event.touches[0].pageX - boundingRect.left - window.scrollX) / pixelSizeX());
+    mouse.y = Math.floor((event.touches[0].pageY - boundingRect.top - window.scrollY) / pixelSizeY());
 }
 
 canvas.addEventListener('touchstart', (event) => {
@@ -73,7 +107,7 @@ canvas.addEventListener('touchend', () => {
     touchDown = false;
 });
 
-window.addEventListener('touchmove', handleTouchInput);
+canvas.addEventListener('touchmove', handleTouchInput);
 
 // X- and Y-Axis acceleration, entered manually through sliders when in manual mode or
 // measured by sensors when in automatic mode
@@ -99,28 +133,40 @@ let receivedDeviceMotionData = false;
 
 const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
 
+/**
+ * Starts the collection of acceleration sensor data.
+ *
+ * Needed because, on iOS, device motion can only be accessed after given explicit permission by the user.
+ */
 function activateDeviceMotion() {
     window.addEventListener('devicemotion', (event) => {
         if (automaticMode) {
+            // Which direction the DeviceMotion axes point to (relative to the screen)
+            // depends on the screen's orientation.
             switch (screen.orientation.angle) {
-                case 0:
-                    xAcc = -event.accelerationIncludingGravity.x;
-                    yAcc = event.accelerationIncludingGravity.y;
-                    break;
-                case 90:
+                case 90: {
                     xAcc = event.accelerationIncludingGravity.y;
                     yAcc = event.accelerationIncludingGravity.x;
                     break;
-                case 180:
+                }
+                case 180: {
                     xAcc = event.accelerationIncludingGravity.x;
                     yAcc = -event.accelerationIncludingGravity.y;
                     break;
-                case 270:
+                }
+                case 270: {
                     xAcc = -event.accelerationIncludingGravity.y;
                     yAcc = -event.accelerationIncludingGravity.x;
                     break;
+                }
+                default: {
+                    xAcc = -event.accelerationIncludingGravity.x;
+                    yAcc = event.accelerationIncludingGravity.y;
+                    break;
+                }
             }
 
+            // accelerationIncludingGravity is flipped on Apple devices
             if (isIos) {
                 xAcc = -xAcc;
                 yAcc = -yAcc;
@@ -151,7 +197,7 @@ ySlider.addEventListener('input', () => {
     yAcc = parseFloat(ySlider.value);
 });
 
-// disable Scrolling while interacting with a slider
+// Disable scrolling while interacting with any slider.
 document.querySelectorAll('.slider').forEach((slider) => {
     slider.addEventListener('touchstart', () => {
         disableScrolling();
@@ -246,6 +292,7 @@ document.getElementById('reset-button').addEventListener('click', () => {
 
 const popupBlur = document.getElementById('popup-blur');
 
+// Opens the corresponding popup when clicking on any popup button.
 document.querySelectorAll('.popup-button').forEach(button => {
     button.addEventListener('click', () => {
         let buttonClass = button.classList[1];
@@ -254,6 +301,7 @@ document.querySelectorAll('.popup-button').forEach(button => {
     })
 });
 
+// Closes the popup when clicking outside of it.
 popupBlur.addEventListener('click', () => {
     document.querySelectorAll('.popup').forEach(popup => {
         popup.style.display = 'none';
@@ -265,11 +313,15 @@ popupBlur.addEventListener('click', () => {
 
 const ctx = canvas.getContext('2d');
 
-const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+const imageData = ctx.getImageData(0, 0, simulationWidth, simulationHeight);
 
-// Adds a grain of sand on the imageData, which will later be displayed on the canvas.
+/**
+ * Draws a grain of sand on the imageData, which will later be displayed on the canvas.
+ *
+ * @param grain {SandGrain} the drawn sand grain
+ */
 function draw(grain) {
-    let i = (grain.x + grain.y * canvas.width) * 4;
+    let i = (grain.x + grain.y * simulationWidth) * 4;
 
     imageData.data[i] = 250 * grain.brightness;         //red
     imageData.data[i + 1] = 190 * grain.brightness;     //green
@@ -277,20 +329,21 @@ function draw(grain) {
     imageData.data[i + 3] = 255;                        //alpha
 }
 
-// Continuously runs the simulation, draws it on the canvas, and adds sand to it on user input.
+/**
+ * Continuously runs the simulation, draws it on the canvas, and adds sand to it on user input.
+ */
 function runSimulation() {
     imageData.data.fill(0);
 
     if (sandType === 'dynamic') {
         for (let i = 0; i < speedSlider.value; i++) {
-            step(xAcc, yAcc);
+            stepDynamic(xAcc, yAcc);
         }
     } else {
         for (let i = 0; i < speedSlider.value; i++) {
-            stepOriginal(xAcc, yAcc);
+            stepStatic(xAcc, yAcc);
         }
     }
-
 
     if (mouseDown || touchDown) {
         addGrain(mouse.x, mouse.y);
