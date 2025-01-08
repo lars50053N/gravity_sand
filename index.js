@@ -97,6 +97,8 @@ ySliderLabel.textContent = yAcc;
 let activatedDeviceMotion = false;
 let receivedDeviceMotionData = false;
 
+const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
+
 function activateDeviceMotion() {
     window.addEventListener('devicemotion', (event) => {
         if (automaticMode) {
@@ -119,6 +121,10 @@ function activateDeviceMotion() {
                     break;
             }
 
+            if (isIos) {
+                xAcc = -xAcc;
+                yAcc = -yAcc;
+            }
 
             xSlider.value = xAcc;
             ySlider.value = yAcc;
