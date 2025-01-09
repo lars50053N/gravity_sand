@@ -1,3 +1,6 @@
+// This JavaScript file contains the logic for the simulation of sand grains
+// (which is displayed on the website's canvas)
+
 /**
  * The width of the simulation in terms of pixels.
  *
@@ -25,6 +28,21 @@ const maxBrightness = 1;
  * @type {number}
  */
 const minBrightness = 0.6;
+
+/**
+ * The amount of consecutive movement attempts that landed on occupied positions,
+ * that are needed for a sand grain to be considered stationary when using dynamic sand.
+ *
+ * @type {number}
+ */
+const dynamicSandThreshold = 5;
+
+/**
+ * The maximum possible absolute value of the acceleration.
+ *
+ * @type {number}
+ */
+const accelerationCap = 10;
 
 /**
  * Brightness factor for the next sand grain which is added to the simulation.
@@ -57,18 +75,29 @@ let sand = [];
 let occupationGrid = Array.from({length: simulationWidth}, () => new Array(simulationHeight).fill(false));
 
 /**
- * Creates a new sand grain, which occupies a single pixel in the simulation.
- *
- * @param x {number} the grain's x position (x=0 is the leftmost pixel column, x increases when going to the right)
- * @param y {number} the grain's y position (y=0 is the uppermost pixel column, y increases when going down)
- * @param brightness {number} the grain's brightness factor, which determines the grain's brightness on the canvas
- * @constructor
+ * A sand grain occupies a single pixel in the simulation.
  */
-function SandGrain(x, y, brightness) {
-    this.x = x;
-    this.y = y;
-    this.brightness = brightness;
-    this.stationary = 0;
+class SandGrain {
+    /**
+     * The amount of consecutive movement attempts that have failed,
+     * because the target position already contained another sand grain.
+     *
+     * @type {number}
+     */
+    stationaryTime = 0;
+
+    /**
+     * Creates a new sand grain.
+     *
+     * @param x {number} the grain's x position (x=0 is the leftmost pixel column, x increases when going to the right)
+     * @param y {number} the grain's y position (y=0 is the uppermost pixel column, y increases when going down)
+     * @param brightness {number} the grain's brightness factor, which determines the grain's brightness on the canvas
+     */
+    constructor(x, y, brightness) {
+        this.x = x;
+        this.y = y;
+        this.brightness = brightness;
+    }
 }
 
 /**
@@ -121,10 +150,21 @@ function validPlace(x, y) {
 }
 
 /**
+ * Returns the given acceleration if inside the interval [-10, 10].
+ * Otherwise, 10 is returned for positive acceleration values and -10 is returned for negative acceleration values.
+ *
+ * @param acceleration {number} the given acceleration
+ * @returns {number} the capped acceleration
+ */
+function capAcceleration(acceleration) {
+    return Math.sign(acceleration) * Math.min(Math.abs(acceleration), accelerationCap);
+}
+
+/**
  * Advances the simulation by a single step using dynamic sand.
  * Sand will not remain stationary when piled up on the ground, but it instead will move dynamically.
  *
- * When a sand grain is stationary (the last 5 movement attempts landed on positions that were already occupied),
+ * When a sand grain is stationary (the last few movement attempts landed on positions that were already occupied),
  * the x- and y-accelerations for this sand grain are changed by a random amount.
  * This random amount is dependent on the magnitude of the acceleration of the respective cross axis.
  *
@@ -141,10 +181,13 @@ function stepDynamic(xAcc, yAcc) {
         let xAccRand = xAcc;
         let yAccRand = yAcc;
 
-        if (grain.stationary >= 5) {
-            xAccRand += (Math.random() - 1/2) * Math.pow(yAcc, 2);
-            yAccRand += (Math.random() - 1/2) * Math.pow(xAcc, 2);
+        if (grain.stationaryTime >= dynamicSandThreshold) {
+            xAccRand += (Math.random() - 1 / 2) * Math.pow(yAcc, 2);
+            yAccRand += (Math.random() - 1 / 2) * Math.pow(xAcc, 2);
         }
+
+        xAccRand = capAcceleration(xAccRand);
+        yAccRand = capAcceleration(yAccRand);
 
         let xOffset = 0;
         let yOffset = 0;
@@ -165,9 +208,9 @@ function stepDynamic(xAcc, yAcc) {
             grain.x = newX;
             grain.y = newY;
             occupationGrid[grain.x][grain.y] = true;
-            grain.stationary = 0;
+            grain.stationaryTime = 0;
         } else if ((xOffset !== 0 || yOffset !== 0) && insideBounds(newX, newY)) {
-            grain.stationary++;
+            grain.stationaryTime++;
         }
     }
 }

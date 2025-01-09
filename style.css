@@ -41,7 +41,7 @@ button:active:not(.segment) {
     padding: 0.5rem;
     font-weight: bold;
 
-    @media (max-width: 50rem) {
+    @media (max-width: 55rem) {
         font-size: 3rem;
     }
 }
@@ -51,22 +51,10 @@ button:active:not(.segment) {
     color: #333333;
 }
 
-.alert {
-    background-color: indianred;
-    color: white;
-    padding: 0.7rem 1.5rem;
-    border-radius: 2rem;
-    border: 0.2rem solid darkred;
-    font-size: 1rem;
-    text-align: center;
-    margin: 0.5rem;
-    display: none;
-}
-
 #main-body {
     flex-direction: row;
 
-    @media (max-width: 50rem) {
+    @media (max-width: 55rem) {
         flex-direction: column;
     }
 }
@@ -124,7 +112,7 @@ button:active:not(.segment) {
     border-radius: 0.5rem;
     padding: 1rem 0.5rem 0.5rem 0.5rem;
 
-    @media (min-width: 50rem) {
+    @media (min-width: 55rem) {
         margin-top: 2rem;
     }
 }
@@ -155,10 +143,10 @@ button:active:not(.segment) {
     background-color: #e0e0e0;
 }
 
-#acc-slider-container {
+.slider-container {
     flex-direction: column;
 
-    @media (max-width: 50rem) {
+    @media (max-width: 55rem) {
         flex-direction: row;
     }
 
@@ -181,6 +169,18 @@ button:active:not(.segment) {
     cursor: pointer;
     min-width: 12rem;
     margin-bottom: 0.5rem;
+}
+
+.alert {
+    background-color: indianred;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 2rem;
+    border: 0.2rem solid darkred;
+    font-size: 1rem;
+    text-align: center;
+    margin: 0.5rem;
+    display: none;
 }
 
 #reset-button {
@@ -227,7 +227,7 @@ button:active:not(.segment) {
         width: 70vw;
     }
 
-    @media (max-width: 50rem) {
+    @media (max-width: 55rem) {
         width: 85vw;
     }
 }

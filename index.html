@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
           integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link id="css" rel="stylesheet" type="text/css" href="index.css">
-    <script src="simulation.js" defer></script>
-    <script src="index.js" defer></script>
+    <link id="css" rel="stylesheet" type="text/css" href="style.css">
+    <script src="javascript/simulation.js" defer></script>
+    <script src="javascript/popup.js" defer></script>
+    <script src="javascript/input.js" defer></script>
+    <script src="javascript/gravity.js" defer></script>
+    <script src="javascript/canvas.js" defer></script>
 </head>
 <body id="body">
 
@@ -43,7 +46,7 @@
                 <button class="segment gravity" id="automatic-button">Automatic</button>
             </div>
 
-            <div id="acc-slider-container">
+            <div class="slider-container">
                 <div class="slider-box">
                     <label for="slider-x" class="slider-label">
                         X-Axis Acceleration: <span id="slider-value-x"></span>
@@ -60,9 +63,20 @@
             </div>
         </div>
 
-        <div class="slider-box">
-            <label for="slider-speed">Simulation Speed: <span id="slider-value-speed"></span></label>
-            <input type="range" class="slider" id="slider-speed" min="0" max="10" step="1">
+        <div class="slider-container">
+            <div class="slider-box">
+                <label for="slider-speed">Simulation Speed: <span id="slider-value-speed"></span></label>
+                <input type="range" class="slider" id="slider-speed" min="0" max="10" step="1">
+            </div>
+
+            <div class="slider-box">
+                <label for="slider-brush">Brush Size: <span id="slider-value-brush"></span>
+                    <button class="popup-button brush">
+                        <i class="fa-regular fa-circle-question"></i>
+                    </button>
+                </label>
+                <input type="range" class="slider" id="slider-brush" min="1" max="5" step="1">
+            </div>
         </div>
 
         <label for="sand-button">
@@ -99,16 +113,23 @@
     <h2>Gravity Controls</h2>
     <p>
         You can use these controls to adjust the gravity inside the simulation.<br><br>
-        In Manual Mode, the gravity is controlled by these sliders.<br><br>
-        In Automatic Mode, the gravity is determined by your device's sensors.
+        In <b>Manual Mode</b>, gravity is controlled by these sliders.<br><br>
+        In <b>Automatic Mode</b>, gravity is determined by your device's sensors.
+    </p>
+</div>
+<div class="popup brush">
+    <h2>Brush Size</h2>
+    <p>
+        You can adjust the amount of sand that will be added to the simulation when clicking on the canvas.<br><br>
     </p>
 </div>
 <div class="popup sand">
     <h2>Sand Type</h2>
     <p>
         You can choose, how the sand should behave when lying on the ground.<br><br>
-        Dynamic Sand will continue to move and fall.<br><br>
-        Static Sand will remain stationary and only move in the gravity's direction.
+        <b>Dynamic Sand</b> will start to disperse, when piled up on the ground.
+        The rate of dispersion is dependent on the gravity's strength.<br><br>
+        <b>Static Sand</b> will not disperse and only move in the gravity's direction.
     </p>
 </div>
 
