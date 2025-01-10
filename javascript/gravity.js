@@ -60,7 +60,10 @@ const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
  */
 function activateDeviceMotion() {
     window.addEventListener('devicemotion', (event) => {
-        if (automaticMode) {
+        if (automaticMode
+            && event.accelerationIncludingGravity.x != null
+            && event.accelerationIncludingGravity.y != null
+        ) {
             // Which direction the DeviceMotion axes point to (relative to the screen)
             // depends on the screen's orientation.
             switch (screen.orientation.angle) {
