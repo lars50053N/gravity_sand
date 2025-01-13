@@ -203,6 +203,7 @@ button:active:not(.segment) {
     max-width: 85vw;
     padding: 1vw 5vw 2.5vw 5vw;
     border: 1px solid #666666;
+    border-radius: 0.5rem;
     z-index: 5;
     top: 20%
 }
@@ -216,6 +217,17 @@ button:active:not(.segment) {
     left: 0;
     height: 100%;
     width: 100%;
+}
+
+.popup-close-button {
+    border: none;
+    background: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    height: 2rem;
+    width: 2rem;
+    font-size: 1.8rem;
 }
 
 #description {

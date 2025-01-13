@@ -81,4 +81,3 @@ document.getElementById('static-sand-button').addEventListener('click', () => {
 document.getElementById('reset-button').addEventListener('click', () => {
     reset();
 });
-

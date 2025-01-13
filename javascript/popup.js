@@ -12,9 +12,19 @@ document.querySelectorAll('.popup-button').forEach(button => {
 });
 
 // Closes the popup when clicking outside of it.
-popupBlur.addEventListener('click', () => {
+popupBlur.addEventListener('click', closeAllPopups);
+
+//Closes the popup when clicking on the close button.
+document.querySelectorAll('.popup-close-button').forEach(button => {
+    button.addEventListener('click', closeAllPopups);
+})
+
+/**
+ * Closes all popups.
+ */
+function closeAllPopups() {
     document.querySelectorAll('.popup').forEach(popup => {
         popup.style.display = 'none';
     })
     popupBlur.style.display = 'none';
-});
+}
