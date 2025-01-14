@@ -1,5 +1,5 @@
 // This JavaScript file contains the logic for the simulation of sand grains
-// (which is displayed on the website's canvas)
+// (which is displayed on the website's canvas).
 
 /**
  * The width of the simulation in terms of pixels.
