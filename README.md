@@ -15,7 +15,7 @@ In Manual Mode, you can use sliders to control the simulation's gravity.
 ### Automatic Mode
 
 In Automatic Mode, the gravity is automatically gathered from the gravity acting on the devices sensors. 
-Tilt and rotate your phone and watch the sand fall in a different direction.
+Tilt and rotate your phone and watch the sand fall in a different direction!
 
 ## Other Controls
 
