@@ -4,6 +4,8 @@
 A Falling Sand Game where you can change the direction and strength of gravity using motion controls.
 Click or tap on the canvas to add sand to the simulation!
 
+Try it out yourself at: https://lars50053n.github.io/gravity_sand/
+
 ## Gravity Controls
 
 ### Manual Mode
